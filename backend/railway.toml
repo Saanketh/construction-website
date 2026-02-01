@@ -1,0 +1,14 @@
+# Backend configuration for Railway deployment
+
+[build]
+  builder = "NIXPACKS"
+
+[deploy]
+  startCommand = "java -jar target/*.jar"
+  healthcheckPath = "/actuator/health"
+  healthcheckTimeout = 100
+  restartPolicyType = "ON_FAILURE"
+
+[variables]
+  JAVA_VERSION = "17"
+  NODE_VERSION = "18"
