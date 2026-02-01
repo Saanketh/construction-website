@@ -1,0 +1,35 @@
+{
+  "name": "construction-website",
+  "services": {
+    "api": {
+      "gitSource": {
+        "repo": "YOUR_USERNAME/construction-website",
+        "branch": "main"
+      },
+      "rootDirectory": "backend",
+      "buildCommand": "mvn clean package -DskipTests",
+      "startCommand": "java -jar target/*.jar",
+      "healthCheckPath": "/actuator/health",
+      "environmentVariables": {
+        "SPRING_DATASOURCE_URL": "${{RAILWAY_POSTGRESQL_URL}}",
+        "SPRING_DATASOURCE_USERNAME": "${{RAILWAY_POSTGRESQL_USER}}",
+        "SPRING_DATASOURCE_PASSWORD": "${{RAILWAY_POSTGRESQL_PASSWORD}}"
+      }
+    }
+  },
+  "builds": {
+    "frontend": {
+      "gitSource": {
+        "repo": "YOUR_USERNAME/construction-website",
+        "branch": "main"
+      },
+      "rootDirectory": "frontend",
+      "buildCommand": "npm run build:prod",
+      "publishDirectory": "dist/frontend",
+      "installCommand": "npm install",
+      "environmentVariables": {
+        "API_URL": "${{RAILWAY_PUBLIC_URL}}"
+      }
+    }
+  }
+}

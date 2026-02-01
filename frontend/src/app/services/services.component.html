@@ -1,0 +1,36 @@
+<section class="services-hero">
+  <div class="container">
+    <h1>Our Services</h1>
+    <p>Comprehensive construction solutions for all your needs</p>
+  </div>
+</section>
+
+<section class="container">
+  <div *ngIf="isLoading" class="loading">
+    <h3>Loading services...</h3>
+  </div>
+
+  <div *ngIf="error" class="error">
+    <h3>{{ error }}</h3>
+  </div>
+
+  <div *ngIf="!isLoading && !error" class="services-grid">
+    <div class="service-card" *ngFor="let service of services">
+      <div class="service-icon">
+        <img [src]="service.iconUrl" [alt]="service.title">
+      </div>
+      <div class="service-content">
+        <h3>{{ service.title }}</h3>
+        <p>{{ service.description }}</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="cta-section">
+  <div class="container">
+    <h2>Need a Custom Solution?</h2>
+    <p>We offer tailored construction services to meet your specific requirements</p>
+    <a routerLink="/contact" class="btn">Get a Free Quote</a>
+  </div>
+</section>
