@@ -5,8 +5,10 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
-    "build:prod": "ng build --configuration production",
-    "vercel-build": "npm run build:prod",
+    "build:prod": "npx @angular/cli@17 build --configuration production --output-path=dist/frontend",
+    "build:netlify": "npx @angular/cli@17 build --configuration production --output-path=dist/frontend",
+    "build:static": "ng build --configuration production --output-path=dist",
+    "vercel-build": "ng build --configuration production",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
   },

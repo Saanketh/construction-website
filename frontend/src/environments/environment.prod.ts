@@ -2,5 +2,5 @@
 
 export const environment = {
   production: true,
-  apiUrl: 'https://construction-backend.up.railway.app'
+  apiUrl: 'construction-website-production-2198.up.railway.app'
 };

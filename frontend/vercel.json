@@ -15,5 +15,9 @@
       "src": "/(.*)",
       "dest": "/index.html"
     }
-  ]
+  ],
+  "buildCommand": "npm run build:prod",
+  "outputDirectory": "dist/frontend",
+  "installCommand": "npm install",
+  "framework": null
 }
