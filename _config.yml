@@ -1,0 +1,48 @@
+# _config.yml - Jekyll configuration for GitHub Pages
+
+# Build settings
+markdown: kramdown
+highlighter: rouge
+plugins:
+  - jekyll-feed
+  - jekyll-sitemap
+  - jekyll-seo-tag
+
+# Exclude files from Jekyll processing
+exclude:
+  - node_modules/
+  - Gemfile
+  - Gemfile.lock
+  - package.json
+  - package-lock.json
+  - README.md
+  - "*.log"
+  - ".git/"
+  - ".gitignore"
+  - ".idea/"
+  - ".vscode/"
+  - "src/"
+  - "angular.json"
+  - "tsconfig.json"
+  - "tsconfig.app.json"
+  - "tsconfig.spec.json"
+  - ".browserslistrc"
+  - "karma.conf.js"
+  - ".editorconfig"
+  - "esbuild.config.js"
+
+# Include only the built files
+include:
+  - "dist/frontend/**/*"
+  - "_config.yml"
+
+# Base URL if hosted in subdirectory
+baseurl: "/construction-website"
+
+# Site settings
+title: "Construction Company"
+description: "Professional construction services"
+url: "https://your-username.github.io"
+
+# Force Jekyll to ignore our files explicitly
+safe: true
