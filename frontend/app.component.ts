@@ -1,0 +1,1 @@
+import { Component } from "@angular/core"; @Component({ selector: "app-root", template: "<div style='padding:50px'><h1>Construction Website</h1><p>Your professional construction website is loading...</p><p>Backend URL: https://construction-backend.up.railway.app</p></div>", styles: [] }) export class AppComponent { title = "construction-website"; }  
