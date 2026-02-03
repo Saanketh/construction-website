@@ -310,21 +310,26 @@
     font-size: 1.1rem;
   }
 
+  /* Mobile: simple vertical stack like Home (no timeline rail) */
   .newsletter-timeline::before {
-    left: 30px;
+    display: none;
   }
 
   .timeline-item,
   .timeline-item.reverse {
     flex-direction: column;
-    align-items: flex-start;
-    padding-left: 60px;
-    margin-bottom: 3rem;
+    align-items: stretch;
+    padding-left: 0;
+    margin-bottom: 2rem;
   }
 
   .timeline-marker {
-    left: 30px;
-    transform: translateX(-50%);
+    position: static;
+    transform: none;
+    flex-direction: row;
+    justify-content: flex-start;
+    gap: 0.75rem;
+    margin-bottom: 0.75rem;
   }
 
   .timeline-icon {
@@ -344,7 +349,7 @@
   .timeline-item.reverse .timeline-content {
     width: 100%;
     padding: 0;
-    margin-top: 1.5rem;
+    margin-top: 0;
   }
 
   .newsletter-title {

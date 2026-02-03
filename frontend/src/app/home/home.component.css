@@ -386,8 +386,9 @@
 }
 
 .status-in-progress {
-  background: rgba(0, 123, 255, 0.95);
+  background: rgba(0, 184, 148, 0.95);
   color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.25);
 }
 
 .status-yet-to-plan {

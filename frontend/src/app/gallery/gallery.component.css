@@ -448,9 +448,14 @@
   }
 
   .category-filter {
-    justify-content: flex-start;
-    overflow-x: auto;
-    flex-wrap: nowrap;
-    padding-bottom: 0.5rem;
+    justify-content: center;
+    overflow-x: hidden;
+    flex-wrap: wrap;
+    padding-bottom: 0;
+  }
+
+  .filter-btn {
+    padding: 0.55rem 0.9rem;
+    font-size: 0.85rem;
   }
 }

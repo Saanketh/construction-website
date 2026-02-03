@@ -13,6 +13,9 @@ export class FooterComponent {
     window.scrollTo({ top: 0, left: 0 });
     document.documentElement.scrollTop = 0;
     document.body.scrollTop = 0;
+    if (document.scrollingElement) {
+      document.scrollingElement.scrollTop = 0;
+    }
   }
 
   navigate(path: string): void {
