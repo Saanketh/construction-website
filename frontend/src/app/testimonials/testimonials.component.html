@@ -1,0 +1,63 @@
+<section class="page-header">
+  <div class="container">
+    <h1>Hear From Our Clients</h1>
+    <p>Real words from families and businesses we have built for</p>
+  </div>
+</section>
+
+<section class="testimonials-content">
+  <div class="container">
+    <div class="highlights">
+      <div class="highlight-card">
+        <i class="fas fa-star"></i>
+        <h3>Quality First</h3>
+        <p>We focus on strong materials, clean finishing, and consistent supervision.</p>
+      </div>
+      <div class="highlight-card">
+        <i class="fas fa-handshake"></i>
+        <h3>Transparent Process</h3>
+        <p>Clear planning, cost visibility, and regular updates at every milestone.</p>
+      </div>
+      <div class="highlight-card">
+        <i class="fas fa-heart"></i>
+        <h3>Relationship Driven</h3>
+        <p>We build homes and trust. Your peace of mind matters as much as delivery.</p>
+      </div>
+    </div>
+
+    <div class="reviews-grid">
+      <article *ngFor="let t of testimonials" class="review-card">
+        <div class="review-top">
+          <div class="avatar">
+            <span>{{ t.name.charAt(0) }}</span>
+          </div>
+          <div class="meta">
+            <h3 class="name">{{ t.name }}</h3>
+            <p class="sub">
+              <span class="pill">{{ t.projectType }}</span>
+              <span class="dot">•</span>
+              <span>{{ t.location }}</span>
+              <span class="dot">•</span>
+              <span>{{ t.date }}</span>
+            </p>
+          </div>
+        </div>
+
+        <div class="rating" aria-label="Rating">
+          <ng-container *ngFor="let s of stars">
+            <i class="fas fa-star" [class.muted]="s > t.rating"></i>
+          </ng-container>
+        </div>
+
+        <h4 class="title">{{ t.title }}</h4>
+        <p class="message">{{ t.message }}</p>
+      </article>
+    </div>
+
+    <div class="cta">
+      <h2>Want to share your experience?</h2>
+      <p>We would love to hear your feedback and feature your review.</p>
+      <a routerLink="/contact" class="btn btn-primary">Send Your Review</a>
+    </div>
+  </div>
+</section>

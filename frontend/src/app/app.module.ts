@@ -15,6 +15,7 @@ import { BlogsComponent } from './blogs/blogs.component';
 import { NewsletterComponent } from './newsletter/newsletter.component';
 import { GalleryComponent } from './gallery/gallery.component';
 import { ChatbotComponent } from './chatbot/chatbot.component';
+import { TestimonialsComponent } from './testimonials/testimonials.component';
 
 const routes = [
   { path: '', component: HomeComponent },
@@ -23,6 +24,7 @@ const routes = [
   { path: 'services', component: ServicesComponent },
   { path: 'projects', component: ProjectsComponent },
   { path: 'blogs', component: BlogsComponent },
+  { path: 'reviews', component: TestimonialsComponent },
   { path: 'newsletter', component: NewsletterComponent },
   { path: 'gallery', component: GalleryComponent },
   { path: 'contact', component: ContactComponent },
@@ -39,6 +41,7 @@ const routes = [
     ServicesComponent,
     ProjectsComponent,
     BlogsComponent,
+    TestimonialsComponent,
     NewsletterComponent,
     GalleryComponent,
     ContactComponent,
