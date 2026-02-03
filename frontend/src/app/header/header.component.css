@@ -33,6 +33,20 @@ header .container {
   gap: 2rem;
 }
 
+@media (max-width: 1024px) {
+  header .container {
+    padding: 0 1.25rem;
+  }
+
+  .navbar ul {
+    gap: 1.25rem;
+  }
+
+  .logo a {
+    font-size: 1.25rem;
+  }
+}
+
 .navbar ul li a {
   color: #fff;
   text-decoration: none;
@@ -75,7 +89,30 @@ header .container {
   }
 
   .navbar ul.active {
-    max-height: 300px;
+    max-height: calc(100vh - 70px);
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
     padding: 1rem 0;
+  }
+
+  .navbar ul li {
+    width: 100%;
+    text-align: center;
+  }
+
+  .navbar ul li a {
+    display: block;
+    width: 100%;
+    padding: 0.65rem 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .logo a {
+    font-size: 1.1rem;
+  }
+
+  header .container {
+    padding: 0 1rem;
   }
 }

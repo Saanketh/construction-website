@@ -151,11 +151,37 @@
     font-size: 2rem;
   }
 
-  .about-section {
+  .founder-section {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    padding: 2rem;
+  }
+
+  .company-section {
     grid-template-columns: 1fr;
   }
 
   .stats {
     grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 480px) {
+  .founder-section {
+    padding: 1.25rem;
+    margin-bottom: 3rem;
+  }
+
+  .founder-story h2 {
+    font-size: 1.6rem;
+  }
+
+  .quote {
+    font-size: 1.05rem;
+    padding-left: 1rem;
+  }
+
+  .stats {
+    grid-template-columns: 1fr;
   }
 }
