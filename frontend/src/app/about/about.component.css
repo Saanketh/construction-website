@@ -31,6 +31,10 @@
   padding: 0 var(--container-padding);
 }
 
+.about-timeline {
+  position: relative;
+}
+
 .founder-section {
   display: grid;
   grid-template-columns: 350px 1fr;
@@ -183,22 +187,88 @@
   .founder-section {
     grid-template-columns: 1fr;
     gap: 2rem;
-    padding: 2rem;
+    padding: 0;
   }
 
   .company-section {
     grid-template-columns: 1fr;
+    padding: 0;
+    border-top: 0;
   }
 
   .stats {
     grid-template-columns: repeat(2, 1fr);
+    margin-top: 0;
+  }
+
+  /* Newsletter-like timeline layout on mobile */
+  .about-timeline {
+    padding: 0.5rem 0;
+  }
+
+  .about-timeline::before {
+    content: '';
+    position: absolute;
+    left: 26px;
+    top: 0;
+    bottom: 0;
+    width: 4px;
+    background: linear-gradient(to bottom, #f39c12, #e67e22, #f39c12);
+    border-radius: 2px;
+    opacity: 0.9;
+  }
+
+  .about-timeline-item {
+    position: relative;
+    margin-bottom: 2rem;
+    padding-left: 64px;
+  }
+
+  .about-timeline-item::before {
+    content: '';
+    position: absolute;
+    left: 26px;
+    top: 22px;
+    transform: translate(-50%, 0);
+    width: 16px;
+    height: 16px;
+    background: #f39c12;
+    border-radius: 50%;
+    border: 4px solid #fff;
+    box-shadow: 0 8px 25px rgba(243, 156, 18, 0.35);
+    z-index: 2;
+  }
+
+  .about-timeline-item {
+    background: #fff;
+    border-radius: 18px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    padding: 1.25rem 1.25rem 1.25rem 64px;
+  }
+
+  .founder-section,
+  .company-section {
+    box-shadow: none;
+    border-radius: 0;
+    background: transparent;
+  }
+
+  .founder-image img {
+    max-width: 100%;
+  }
+
+  .founder-story h2 {
+    font-size: 1.8rem;
+  }
+
+  .story-content p {
+    text-align: left;
   }
 }
 
 @media (max-width: 480px) {
   .founder-section {
-    padding: 1.25rem;
-    margin-bottom: 3rem;
+    margin-bottom: 0;
   }
 
   .founder-story h2 {
@@ -212,5 +282,18 @@
 
   .stats {
     grid-template-columns: 1fr;
+  }
+
+  .about-timeline::before {
+    left: 20px;
+  }
+
+  .about-timeline-item {
+    padding: 1rem 1rem 1rem 52px;
+  }
+
+  .about-timeline-item::before {
+    left: 20px;
+    top: 18px;
   }
 }
