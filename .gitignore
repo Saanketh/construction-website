@@ -45,10 +45,7 @@ build/
 mvnw
 mvnw.cmd
 
-# Keep built files for GitHub Pages
-!frontend/dist/frontend/
-
-# Explicitly exclude frontend source
-frontend/src/
+# Frontend build/cache
 frontend/node_modules/
 frontend/.angular/
+frontend/dist/

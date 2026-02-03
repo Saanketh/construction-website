@@ -64,6 +64,16 @@ footer .container {
   font-size: 0.9rem;
 }
 
+.footer-bottom a {
+  color: #f39c12;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.footer-bottom a:hover {
+  text-decoration: underline;
+}
+
 .social-links {
   margin-top: 1.5rem;
 }

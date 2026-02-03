@@ -11,6 +11,14 @@ export class AppComponent {
   title = 'construction-website';
 
   constructor(private router: Router) {
+    try {
+      if ('scrollRestoration' in history) {
+        history.scrollRestoration = 'manual';
+      }
+    } catch {
+      // ignore
+    }
+
     // GitHub Pages + hash routing can be inconsistent with Router scroll restoration.
     // Force scroll-to-top on every successful navigation.
     this.router.events
