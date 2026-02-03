@@ -237,7 +237,7 @@ export class DataService {
       title: 'Prashansaa Builders Featured in Raipur Times',
       subtitle: 'Recognition for Excellence in Residential Construction',
       content: 'We are thrilled to announce that Prashansaa Builders has been featured in Raipur Times Business section for our commitment to quality construction and customer satisfaction. The article highlights our innovative approach to residential projects in Shankar Nagar and our focus on building not just houses, but homes that foster community living. Our founder Sahithya Rao was quoted saying, "Every brick we lay is a foundation for someones dreams." This recognition motivates us to continue delivering excellence in every project we undertake.',
-      imageUrl: 'https://images.unsplash.com/photo-1560250097-0b93528c311a?w=800',
+      imageUrl: 'assets/images/about/founder.jpeg',
       date: '2024-02-20'
     },
     {

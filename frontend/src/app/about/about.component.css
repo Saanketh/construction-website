@@ -8,7 +8,7 @@
 .page-header .container {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 0 2rem;
+  padding: 0 var(--container-padding);
 }
 
 .page-header h1 {
@@ -28,7 +28,7 @@
 .about-content .container {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 0 2rem;
+  padding: 0 var(--container-padding);
 }
 
 .founder-section {
@@ -40,6 +40,31 @@
   background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
   border-radius: 20px;
   box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+}
+
+@media (max-width: 992px) {
+  .page-header {
+    padding: 5rem 0;
+  }
+
+  .page-header h1 {
+    font-size: 2.5rem;
+  }
+
+  .founder-section {
+    grid-template-columns: 280px 1fr;
+    gap: 2.5rem;
+    padding: 2.25rem;
+  }
+
+  .founder-image img {
+    max-width: 260px;
+  }
+
+  .company-section {
+    gap: 2rem;
+    padding: 2.25rem 0;
+  }
 }
 
 .founder-image {
@@ -149,6 +174,10 @@
 @media (max-width: 768px) {
   .page-header h1 {
     font-size: 2rem;
+  }
+
+  .page-header {
+    padding: 4rem 0;
   }
 
   .founder-section {

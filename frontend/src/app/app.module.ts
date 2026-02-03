@@ -48,7 +48,12 @@ const routes = [
     BrowserModule,
     HttpClientModule,
     FormsModule,
-    RouterModule.forRoot(routes, { useHash: true })
+    RouterModule.forRoot(routes, {
+      useHash: true,
+      scrollPositionRestoration: 'top',
+      anchorScrolling: 'enabled',
+      scrollOffset: [0, 70]
+    })
   ],
   providers: [],
   bootstrap: [AppComponent]
