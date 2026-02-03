@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { animate, group, query, style, transition, trigger } from '@angular/animations';
-import { NavigationEnd, Router } from '@angular/router';
+import { NavigationEnd, Router, RouterOutlet } from '@angular/router';
 import { filter } from 'rxjs/operators';
 
 @Component({
@@ -55,7 +55,15 @@ export class AppComponent {
       });
   }
 
-  prepareRoute(outlet: any): string {
-    return outlet?.activatedRouteData?.['animation'] || outlet?.activatedRoute?.routeConfig?.path || 'root';
+  prepareRoute(outlet: RouterOutlet | null | undefined): string {
+    if (!outlet || !outlet.isActivated) return 'root';
+
+    // RouterOutlet.activatedRoute is a getter that throws when not activated.
+    // Guarded above, but keep a try/catch to avoid breaking initial render.
+    try {
+      return outlet.activatedRouteData?.['animation'] || outlet.activatedRoute?.routeConfig?.path || 'root';
+    } catch {
+      return 'root';
+    }
   }
 }
