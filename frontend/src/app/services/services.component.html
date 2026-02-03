@@ -35,17 +35,25 @@
             </div>
             <h2>{{ service.title }}</h2>
             <p class="service-description">{{ service.description }}</p>
+
+            <button class="approach-toggle" type="button" (click)="toggleApproach(service.id)"
+                    [attr.aria-expanded]="isExpanded(service.id)">
+              <span>View our approach</span>
+              <i class="fas" [ngClass]="isExpanded(service.id) ? 'fa-chevron-up' : 'fa-chevron-down'"></i>
+            </button>
           </div>
         </div>
-        
-        <div class="approach-section">
-          <h3>Our Approach</h3>
-          <div class="steps-container">
-            <div *ngFor="let step of service.steps" class="step-card">
-              <div class="step-number">{{ step.step }}</div>
-              <div class="step-content">
-                <h4>{{ step.title }}</h4>
-                <p>{{ step.description }}</p>
+
+        <div class="approach-section" [@expandCollapse]="isExpanded(service.id) ? 'expanded' : 'collapsed'">
+          <div class="approach-inner">
+            <h3>Our Approach</h3>
+            <div class="steps-container">
+              <div *ngFor="let step of service.steps" class="step-card">
+                <div class="step-number">{{ step.step }}</div>
+                <div class="step-content">
+                  <h4>{{ step.title }}</h4>
+                  <p>{{ step.description }}</p>
+                </div>
               </div>
             </div>
           </div>

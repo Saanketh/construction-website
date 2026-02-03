@@ -16,6 +16,25 @@ body {
   overflow-x: hidden;
 }
 
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+@keyframes riseIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Default page motion: header + first container content */
+.page-header .container {
+  animation: riseIn 420ms ease both;
+}
+
 body {
   font-family: 'Roboto', sans-serif;
   line-height: 1.6;

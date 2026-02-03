@@ -177,6 +177,37 @@
   padding: 3rem;
   background: #1a1a2e;
   color: #fff;
+  overflow: hidden;
+}
+
+.approach-inner {
+  will-change: transform, opacity;
+}
+
+.approach-toggle {
+  margin-top: 1.25rem;
+  width: fit-content;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.75rem 1rem;
+  border-radius: 999px;
+  border: 2px solid rgba(243, 156, 18, 0.45);
+  background: rgba(243, 156, 18, 0.08);
+  color: #1a1a2e;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 0.2s ease, background 0.2s ease, border-color 0.2s ease;
+}
+
+.approach-toggle:hover {
+  transform: translateY(-2px);
+  background: rgba(243, 156, 18, 0.14);
+  border-color: rgba(243, 156, 18, 0.7);
+}
+
+.approach-toggle i {
+  color: #f39c12;
 }
 
 .approach-section h3 {
@@ -257,6 +288,10 @@
 
   .approach-section {
     padding: 2rem;
+  }
+
+  .approach-toggle {
+    font-size: 0.95rem;
   }
 
   .steps-container {
