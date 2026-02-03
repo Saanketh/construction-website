@@ -63,3 +63,57 @@ footer .container {
   color: #888;
   font-size: 0.9rem;
 }
+
+.social-links {
+  margin-top: 1.5rem;
+}
+
+.social-links h4 {
+  color: #f39c12;
+  margin-bottom: 0.75rem;
+  font-size: 1rem;
+}
+
+.social-icons {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.social-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.social-icon:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.social-icon i {
+  font-size: 1.1rem;
+  margin: 0;
+  color: #fff;
+}
+
+.social-icon.facebook:hover {
+  background: #1877f2;
+}
+
+.social-icon.instagram:hover {
+  background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+}
+
+.social-icon.whatsapp:hover {
+  background: #25d366;
+}
+
+.social-icon.twitter:hover {
+  background: #1da1f2;
+}
