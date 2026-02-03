@@ -1,0 +1,81 @@
+<section class="page-header">
+  <div class="container">
+    <h1>Interior Gallery</h1>
+    <p>Explore our stunning interior design portfolio</p>
+  </div>
+</section>
+
+<section class="gallery-content">
+  <div class="container">
+    <div class="category-filter">
+      <button 
+        *ngFor="let category of categories" 
+        class="filter-btn"
+        [class.active]="selectedCategory === category.id"
+        (click)="selectCategory(category.id)">
+        <i class="fas {{ category.icon }}"></i>
+        {{ category.name }}
+      </button>
+    </div>
+
+    <div *ngIf="loading" class="loading-state">
+      <div class="spinner"></div>
+      <p>Loading gallery...</p>
+    </div>
+    
+    <div *ngIf="!loading && filteredImages.length === 0" class="empty-state">
+      <i class="fas fa-images"></i>
+      <p>No images found in this category.</p>
+    </div>
+    
+    <div *ngIf="!loading" class="masonry-grid">
+      <div 
+        *ngFor="let image of filteredImages; let i = index" 
+        class="masonry-item"
+        [style.grid-row]="'span ' + (i % 3 === 0 ? 2 : 1)"
+        (click)="openLightbox(image)">
+        <div class="gallery-item">
+          <img [src]="image.url" [alt]="image.title" loading="lazy">
+          <div class="gallery-overlay">
+            <div class="gallery-info">
+              <h4>{{ image.title }}</h4>
+              <span class="gallery-category">
+                <i class="fas fa-tag"></i>
+                {{ getCategoryName(image.category) }}
+              </span>
+            </div>
+            <div class="gallery-icon">
+              <i class="fas fa-expand"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div *ngIf="lightboxOpen" class="lightbox" (click)="closeLightbox()">
+  <button class="lightbox-close" (click)="closeLightbox(); $event.stopPropagation()">
+    <i class="fas fa-times"></i>
+  </button>
+  
+  <button class="lightbox-nav prev" (click)="prevImage(); $event.stopPropagation()">
+    <i class="fas fa-chevron-left"></i>
+  </button>
+  
+  <button class="lightbox-nav next" (click)="nextImage(); $event.stopPropagation()">
+    <i class="fas fa-chevron-right"></i>
+  </button>
+  
+  <div class="lightbox-content" (click)="$event.stopPropagation()">
+    <img *ngIf="selectedImage" [src]="selectedImage.url" [alt]="selectedImage.title">
+    <div *ngIf="selectedImage" class="lightbox-info">
+      <h3>{{ selectedImage.title }}</h3>
+      <span class="lightbox-category">{{ getCategoryName(selectedImage.category) }}</span>
+    </div>
+  </div>
+  
+  <div class="lightbox-counter">
+    {{ currentImageIndex + 1 }} / {{ filteredImages.length }}
+  </div>
+</div>

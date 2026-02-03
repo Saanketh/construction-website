@@ -1,0 +1,25 @@
+<header>
+  <div class="container">
+    <div class="logo">
+      <a routerLink="/">
+        <i class="fas fa-building"></i>
+        <span>Prashansaa Builders</span>
+      </a>
+    </div>
+    <nav class="navbar">
+      <ul [class.active]="isMenuOpen">
+        <li><a routerLink="/" (click)="toggleMenu()">Home</a></li>
+        <li><a routerLink="/about" (click)="toggleMenu()">About</a></li>
+        <li><a routerLink="/services" (click)="toggleMenu()">Services</a></li>
+        <li><a routerLink="/projects" (click)="toggleMenu()">Projects</a></li>
+        <li><a routerLink="/gallery" (click)="toggleMenu()">Gallery</a></li>
+        <li><a routerLink="/blogs" (click)="toggleMenu()">Blogs</a></li>
+        <li><a routerLink="/newsletter" (click)="toggleMenu()">Newsletter</a></li>
+        <li><a routerLink="/contact" (click)="toggleMenu()">Contact</a></li>
+      </ul>
+    </nav>
+    <div class="menu-toggle" (click)="toggleMenu()">
+      <i class="fas fa-bars"></i>
+    </div>
+  </div>
+</header>

@@ -1,0 +1,56 @@
+<section class="page-header">
+  <div class="container">
+    <h1>Our Services</h1>
+    <p>Comprehensive construction solutions tailored for Raipur</p>
+  </div>
+</section>
+
+<section class="services-content">
+  <div class="container">
+    <div *ngIf="loading" class="loading-state">
+      <div class="spinner"></div>
+      <p>Loading services...</p>
+    </div>
+    
+    <div *ngIf="error" class="error-state">
+      <i class="fas fa-exclamation-triangle"></i>
+      <p>{{ error }}</p>
+      <button class="btn btn-primary" (click)="loadServices()">Try Again</button>
+    </div>
+    
+    <div *ngIf="!loading && !error && services.length === 0" class="empty-state">
+      <i class="fas fa-folder-open"></i>
+      <p>No services available at the moment.</p>
+    </div>
+    
+    <div *ngIf="!loading && !error" class="services-list">
+      <div *ngFor="let service of services; let i = index" class="service-detail">
+        <div class="service-header" [class.reverse]="i % 2 === 1">
+          <div class="service-image">
+            <img [src]="service.imageUrl" [alt]="service.title">
+          </div>
+          <div class="service-info">
+            <div class="service-icon-large">
+              <i class="fas {{service.icon}}"></i>
+            </div>
+            <h2>{{ service.title }}</h2>
+            <p class="service-description">{{ service.description }}</p>
+          </div>
+        </div>
+        
+        <div class="approach-section">
+          <h3>Our Approach</h3>
+          <div class="steps-container">
+            <div *ngFor="let step of service.steps" class="step-card">
+              <div class="step-number">{{ step.step }}</div>
+              <div class="step-content">
+                <h4>{{ step.title }}</h4>
+                <p>{{ step.description }}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

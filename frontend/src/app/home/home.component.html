@@ -1,0 +1,157 @@
+<section class="hero">
+  <div class="container">
+    <div class="hero-content">
+      <h1>Building Your Dreams Into Reality</h1>
+      <p>Professional construction services for residential and commercial projects in Raipur. Trusted by 200+ families.</p>
+      <div class="hero-buttons">
+        <a routerLink="/contact" class="btn btn-primary">Get a Quote</a>
+        <a routerLink="/projects" class="btn btn-secondary">View Projects</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="features">
+  <div class="container">
+    <h2>Why Choose Prashansaa Builders</h2>
+    <div class="features-grid">
+      <div class="feature-card">
+        <i class="fas fa-home"></i>
+        <h3>Local Expertise</h3>
+        <p>15+ years of experience building in Raipur. We understand local regulations and construction needs.</p>
+      </div>
+      <div class="feature-card">
+        <i class="fas fa-file-alt"></i>
+        <h3>Naksha & Regularisation</h3>
+        <p>Expert handling of building approvals and regularisation processes. We navigate the paperwork for you.</p>
+      </div>
+      <div class="feature-card">
+        <i class="fas fa-heart"></i>
+        <h3>Relationship First</h3>
+        <p>We don't just build structures; we build lasting relationships with every family we work with.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="featured-projects">
+  <div class="container">
+    <h2>Explore Our Projects</h2>
+    <p>Filter projects by type, location, and status to find what suits your needs</p>
+    
+    <!-- Project Filters -->
+    <div class="filters-section">
+      <div class="filter-group">
+        <label>Project Type</label>
+        <select [(ngModel)]="selectedType" (change)="applyFilters()">
+          <option value="">All Types</option>
+          <option *ngFor="let type of projectTypes" [value]="type">{{ type }}</option>
+        </select>
+      </div>
+      
+      <div class="filter-group">
+        <label>Location</label>
+        <select [(ngModel)]="selectedLocation" (change)="applyFilters()">
+          <option value="">All Locations</option>
+          <option *ngFor="let location of locations" [value]="location">{{ location }}</option>
+        </select>
+      </div>
+      
+      <div class="filter-group">
+        <label>Status</label>
+        <select [(ngModel)]="selectedStatus" (change)="applyFilters()">
+          <option value="">All Statuses</option>
+          <option *ngFor="let status of statuses" [value]="status">{{ status }}</option>
+        </select>
+      </div>
+      
+      <button class="btn btn-secondary clear-btn" (click)="clearFilters()">
+        <i class="fas fa-times"></i> Clear Filters
+      </button>
+    </div>
+    
+    <!-- Results Count -->
+    <div class="results-count" *ngIf="!loading">
+      <p>Showing {{ filteredProjects.length }} project<span *ngIf="filteredProjects.length !== 1">s</span></p>
+    </div>
+    
+    <!-- Loading State -->
+    <div *ngIf="loading" class="loading-state">
+      <div class="spinner"></div>
+      <p>Loading projects...</p>
+    </div>
+    
+    <!-- Projects Grid -->
+    <div *ngIf="!loading" class="projects-grid">
+      <div *ngFor="let project of filteredProjects" class="project-card">
+        <div class="project-image">
+          <img [src]="project.imageUrl" [alt]="project.title">
+          <div class="project-overlay">
+            <span class="project-category">{{ project.category }}</span>
+            <span class="project-status" [class]="'status-' + project.status.toLowerCase().replace(' ', '-')">{{ project.status }}</span>
+          </div>
+        </div>
+        <div class="project-info">
+          <h3>{{ project.title }}</h3>
+          <div class="project-details">
+            <p><i class="fas fa-map-marker-alt"></i> {{ project.location }}</p>
+            <p><i class="fas fa-ruler-combined"></i> {{ project.sqft }} sq ft</p>
+          </div>
+          <p class="project-description">{{ project.description }}</p>
+        </div>
+      </div>
+    </div>
+    
+    <!-- No Results -->
+    <div *ngIf="!loading && filteredProjects.length === 0" class="no-results">
+      <i class="fas fa-search"></i>
+      <p>No projects match your selected filters. Try adjusting your criteria.</p>
+      <button class="btn btn-primary" (click)="clearFilters()">View All Projects</button>
+    </div>
+    
+    <div class="view-all">
+      <a routerLink="/projects" class="btn btn-primary">View All Projects</a>
+    </div>
+  </div>
+</section>
+
+<section class="services-highlight">
+  <div class="container">
+    <h2>Our Services</h2>
+    <p>Comprehensive construction solutions tailored for Raipur</p>
+    <div class="services-grid-home">
+      <div class="service-card-home">
+        <i class="fas fa-home"></i>
+        <h3>Residential</h3>
+        <p>From dream homes to family residences, we build spaces where memories are made.</p>
+        <a routerLink="/services" class="link-arrow">Learn More <i class="fas fa-arrow-right"></i></a>
+      </div>
+      <div class="service-card-home">
+        <i class="fas fa-building"></i>
+        <h3>Commercial</h3>
+        <p>Offices, retail spaces, and commercial buildings designed for business success.</p>
+        <a routerLink="/services" class="link-arrow">Learn More <i class="fas fa-arrow-right"></i></a>
+      </div>
+      <div class="service-card-home">
+        <i class="fas fa-file-alt"></i>
+        <h3>Naksha</h3>
+        <p>Navigate building regulations with ease. Expert regularisation services.</p>
+        <a routerLink="/services" class="link-arrow">Learn More <i class="fas fa-arrow-right"></i></a>
+      </div>
+      <div class="service-card-home">
+        <i class="fas fa-comments"></i>
+        <h3>Consultation</h3>
+        <p>Expert guidance at every stage. Make informed decisions for your project.</p>
+        <a routerLink="/services" class="link-arrow">Learn More <i class="fas fa-arrow-right"></i></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="cta">
+  <div class="container">
+    <h2>Ready to Build Your Dream?</h2>
+    <p>Contact us today for a free consultation. Let's discuss your project and bring your vision to life.</p>
+    <a routerLink="/contact" class="btn btn-primary">Get Free Consultation</a>
+  </div>
+</section>

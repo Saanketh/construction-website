@@ -1,0 +1,60 @@
+<section class="page-header">
+  <div class="container">
+    <h1>Newsletter</h1>
+    <p>Stay updated with our latest news and announcements</p>
+  </div>
+</section>
+
+<section class="newsletter-content">
+  <div class="container">
+    <div *ngIf="loading" class="loading-state">
+      <div class="spinner"></div>
+      <p>Loading newsletters...</p>
+    </div>
+    
+    <div *ngIf="error" class="error-state">
+      <i class="fas fa-exclamation-triangle"></i>
+      <p>{{ error }}</p>
+      <button class="btn btn-primary" (click)="loadNewsletters()">Try Again</button>
+    </div>
+    
+    <div *ngIf="!loading && !error && newsletters.length === 0" class="empty-state">
+      <i class="fas fa-folder-open"></i>
+      <p>No newsletters available at the moment.</p>
+    </div>
+    
+    <div *ngIf="!loading && !error" class="newsletter-timeline">
+      <div *ngFor="let newsletter of newsletters; let i = index" class="timeline-item" [class.reverse]="i % 2 === 1">
+        <div class="timeline-marker">
+          <div class="timeline-icon">
+            <i class="fas fa-newspaper"></i>
+          </div>
+          <div class="timeline-date">
+            <span class="date-day">{{ formatDate(newsletter.date).split(' ')[1].replace(',', '') }}</span>
+            <span class="date-month">{{ formatDate(newsletter.date).split(' ')[0] }}</span>
+            <span class="date-year">{{ formatDate(newsletter.date).split(' ')[2] }}</span>
+          </div>
+        </div>
+        <div class="timeline-content">
+          <div class="newsletter-card">
+            <div class="newsletter-image">
+              <img [src]="newsletter.imageUrl" [alt]="newsletter.title">
+            </div>
+            <div class="newsletter-body">
+              <span class="newsletter-label">Latest Update</span>
+              <h3 class="newsletter-title">{{ newsletter.title }}</h3>
+              <h4 class="newsletter-subtitle">{{ newsletter.subtitle }}</h4>
+              <p class="newsletter-text">{{ newsletter.content }}</p>
+              <div class="newsletter-footer">
+                <span class="newsletter-date">
+                  <i class="fas fa-calendar"></i>
+                  {{ formatDate(newsletter.date) }}
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

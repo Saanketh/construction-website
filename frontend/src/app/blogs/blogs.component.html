@@ -1,0 +1,63 @@
+<section class="page-header">
+  <div class="container">
+    <h1>Our Blog</h1>
+    <p>Insights, tips, and updates from the construction world</p>
+  </div>
+</section>
+
+<section class="blogs-content">
+  <div class="container">
+    <div *ngIf="loading" class="loading-state">
+      <div class="spinner"></div>
+      <p>Loading blogs...</p>
+    </div>
+    
+    <div *ngIf="error" class="error-state">
+      <i class="fas fa-exclamation-triangle"></i>
+      <p>{{ error }}</p>
+      <button class="btn btn-primary" (click)="loadBlogs()">Try Again</button>
+    </div>
+    
+    <div *ngIf="!loading && !error && blogs.length === 0" class="empty-state">
+      <i class="fas fa-folder-open"></i>
+      <p>No blogs available at the moment.</p>
+    </div>
+    
+    <div *ngIf="!loading && !error" class="blogs-grid">
+      <article *ngFor="let blog of blogs" class="blog-card">
+        <div class="blog-image">
+          <img [src]="blog.imageUrl" [alt]="blog.title">
+          <div class="blog-category">
+            <i class="fas fa-tag"></i>
+            {{ blog.category }}
+          </div>
+        </div>
+        <div class="blog-content">
+          <div class="blog-meta">
+            <span class="blog-author">
+              <i class="fas fa-user"></i>
+              {{ blog.author }}
+            </span>
+            <span class="blog-date">
+              <i class="fas fa-calendar-alt"></i>
+              {{ formatDate(blog.date) }}
+            </span>
+          </div>
+          <h3 class="blog-title">{{ blog.title }}</h3>
+          <p class="blog-excerpt">{{ blog.excerpt }}</p>
+          <div class="blog-full-content" [class.expanded]="isExpanded(blog.id)">
+            <p>{{ blog.content }}</p>
+          </div>
+          <button class="read-more-btn" (click)="toggleReadMore(blog.id)">
+            <span *ngIf="!isExpanded(blog.id)">
+              Read More <i class="fas fa-arrow-right"></i>
+            </span>
+            <span *ngIf="isExpanded(blog.id)">
+              Read Less <i class="fas fa-arrow-up"></i>
+            </span>
+          </button>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
