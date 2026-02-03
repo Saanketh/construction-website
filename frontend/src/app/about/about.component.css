@@ -185,13 +185,12 @@
   }
 
   .founder-section {
-    grid-template-columns: 1fr;
-    gap: 2rem;
+    display: block;
     padding: 0;
   }
 
   .company-section {
-    grid-template-columns: 1fr;
+    display: block;
     padding: 0;
     border-top: 0;
   }
@@ -246,11 +245,13 @@
     padding: 1.25rem 1.25rem 1.25rem 64px;
   }
 
-  .founder-section,
-  .company-section {
-    box-shadow: none;
-    border-radius: 0;
-    background: transparent;
+  .about-timeline-item .about-image {
+    margin-top: 1rem;
+  }
+
+  .about-timeline-item .about-image img {
+    width: 100%;
+    height: auto;
   }
 
   .founder-image img {

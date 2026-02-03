@@ -16,7 +16,12 @@ export class AppComponent {
     this.router.events
       .pipe(filter((e): e is NavigationEnd => e instanceof NavigationEnd))
       .subscribe(() => {
-        window.scrollTo({ top: 0, left: 0 });
+        // Some browsers scroll the <html>, others scroll <body>
+        setTimeout(() => {
+          window.scrollTo({ top: 0, left: 0 });
+          document.documentElement.scrollTop = 0;
+          document.body.scrollTop = 0;
+        }, 0);
       });
   }
 }
