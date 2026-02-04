@@ -17,19 +17,8 @@
         <li><a routerLink="/reviews" (click)="toggleMenu()">Reviews</a></li>
         <li><a routerLink="/newsletter" (click)="toggleMenu()">Newsletter</a></li>
         <li><a routerLink="/contact" (click)="toggleMenu()">Contact</a></li>
-        <li class="admin-only-link">
-          <a routerLink="/admin" (click)="toggleMenu()">
-            <i class="fas" [ngClass]="adminAuth.isAdmin ? 'fa-user-shield' : 'fa-user-lock'"></i>
-            Admin
-          </a>
-        </li>
       </ul>
     </nav>
-
-    <a class="admin-pill" routerLink="/admin" title="Admin">
-      <i class="fas" [ngClass]="adminAuth.isAdmin ? 'fa-user-shield' : 'fa-user-lock'"></i>
-      <span>Admin</span>
-    </a>
     <div class="menu-toggle" (click)="toggleMenu()">
       <i class="fas fa-bars"></i>
     </div>

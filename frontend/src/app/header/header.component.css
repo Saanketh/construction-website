@@ -17,31 +17,6 @@ header .container {
   padding: 0 var(--container-padding);
 }
 
-.admin-pill {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  margin-left: 1rem;
-  padding: 0.55rem 0.85rem;
-  border-radius: 999px;
-  text-decoration: none;
-  color: #fff;
-  border: 1px solid rgba(255, 255, 255, 0.16);
-  background: rgba(255, 255, 255, 0.06);
-  transition: transform 0.2s ease, background 0.2s ease, border-color 0.2s ease;
-  font-weight: 700;
-  font-size: 0.95rem;
-}
-
-.admin-pill i {
-  color: #f39c12;
-}
-
-.admin-pill:hover {
-  transform: translateY(-1px);
-  background: rgba(243, 156, 18, 0.12);
-  border-color: rgba(243, 156, 18, 0.35);
-}
 
 .logo a {
   color: #f39c12;
@@ -155,16 +130,6 @@ header .container {
     width: 100%;
     padding: 0.55rem 1rem;
     font-size: 0.95rem;
-  }
-  .admin-pill {
-    display: none;
-  }
-
-  .admin-only-link a {
-    display: inline-flex;
-    gap: 0.6rem;
-    align-items: center;
-    justify-content: center;
   }
 }
 
