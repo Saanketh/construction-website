@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { environment } from '../../environments/environment';
+import { ContentStoreService } from './content-store.service';
 
 export interface Project {
   id: number;
@@ -54,6 +55,24 @@ export interface Newsletter {
   content: string;
   imageUrl: string;
   date: string;
+}
+
+export interface Review {
+  id: number;
+  name: string;
+  location: string;
+  projectType: 'Residential' | 'Commercial';
+  rating: number;
+  title: string;
+  message: string;
+  date: string;
+}
+
+export interface GalleryItem {
+  id: number;
+  url: string;
+  title: string;
+  category: string;
 }
 
 @Injectable({
@@ -258,22 +277,99 @@ export class DataService {
     }
   ];
 
-  constructor(private http: HttpClient) {}
+  private reviewsData: Review[] = [
+    {
+      id: 1,
+      name: 'Ananya Verma',
+      location: 'Shankar Nagar',
+      projectType: 'Residential',
+      rating: 5,
+      title: 'Transparent and trustworthy team',
+      message: 'We felt heard from day one. The team explained every step clearly, shared realistic timelines, and kept us updated. The workmanship and finishing quality exceeded our expectations. Most importantly, they treated our home like their own project.',
+      date: '2024-12'
+    },
+    {
+      id: 2,
+      name: 'Rohit Sharma',
+      location: 'Kamal Vihar',
+      projectType: 'Commercial',
+      rating: 5,
+      title: 'Professional execution, on-time delivery',
+      message: 'Our commercial site needed disciplined execution and strict supervision. Prashansaa Builders planned the work properly and delivered with minimal delays. Their coordination with vendors and clear cost visibility made the whole process stress-free.',
+      date: '2024-10'
+    },
+    {
+      id: 3,
+      name: 'Meera Joshi',
+      location: 'Amlidih',
+      projectType: 'Residential',
+      rating: 5,
+      title: 'A builder who builds relationships',
+      message: 'The way Sahithya Rao and team communicate is rare. We always knew where the project stood. They supported us with planning decisions and helped us avoid mistakes. The home feels exactly like what we imagined.',
+      date: '2024-08'
+    }
+  ];
+
+  private galleryData: GalleryItem[] = [
+    { id: 1, url: 'https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?w=800', title: 'Modern Living Space', category: 'living-room' },
+    { id: 2, url: 'https://images.unsplash.com/photo-1616594039964-40891a909d99?w=800', title: 'Master Bedroom Suite', category: 'bedroom' },
+    { id: 3, url: 'https://images.unsplash.com/photo-1556911220-bff31c812dba?w=800', title: 'Contemporary Kitchen', category: 'kitchen' },
+    { id: 4, url: 'https://images.unsplash.com/photo-1552321554-5fefe8c9ef14?w=800', title: 'Luxury Bathroom', category: 'bathroom' },
+    { id: 5, url: 'https://images.unsplash.com/photo-1497366216548-37526070297c?w=800', title: 'Office Reception', category: 'commercial' }
+  ];
+
+  constructor(
+    private http: HttpClient,
+    private store: ContentStoreService
+  ) {}
 
   getProjects(): Observable<Project[]> {
-    return of(this.projectsData);
+    return of(this.store.getList('projects', this.projectsData));
   }
 
   getServices(): Observable<Service[]> {
-    return of(this.servicesData);
+    return of(this.store.getList('services', this.servicesData));
   }
 
   getBlogs(): Observable<Blog[]> {
-    return of(this.blogsData);
+    return of(this.store.getList('blogs', this.blogsData));
   }
 
   getNewsletters(): Observable<Newsletter[]> {
-    return of(this.newslettersData);
+    return of(this.store.getList('newsletters', this.newslettersData));
+  }
+
+  getReviews(): Observable<Review[]> {
+    return of(this.store.getList('reviews', this.reviewsData));
+  }
+
+  getGallery(): Observable<GalleryItem[]> {
+    return of(this.store.getList('gallery', this.galleryData));
+  }
+
+  // Admin saves (client-side only)
+  saveProjects(list: Project[]): void {
+    this.store.setList('projects', list);
+  }
+
+  saveServices(list: Service[]): void {
+    this.store.setList('services', list);
+  }
+
+  saveBlogs(list: Blog[]): void {
+    this.store.setList('blogs', list);
+  }
+
+  saveNewsletters(list: Newsletter[]): void {
+    this.store.setList('newsletters', list);
+  }
+
+  saveReviews(list: Review[]): void {
+    this.store.setList('reviews', list);
+  }
+
+  saveGallery(list: GalleryItem[]): void {
+    this.store.setList('gallery', list);
   }
 
   sendContactForm(form: ContactForm): Observable<any> {

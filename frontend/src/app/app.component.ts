@@ -28,6 +28,7 @@ import { filter } from 'rxjs/operators';
 })
 export class AppComponent {
   title = 'construction-website';
+  private revealObserver?: IntersectionObserver;
 
   constructor(private router: Router) {
     try {
@@ -52,7 +53,50 @@ export class AppComponent {
             document.scrollingElement.scrollTop = 0;
           }
         }, 0);
+
+        // Setup scroll-based reveal animations on the new page.
+        setTimeout(() => this.setupScrollReveal(), 50);
       });
+  }
+
+  private setupScrollReveal(): void {
+    if (!('IntersectionObserver' in window)) return;
+
+    if (!this.revealObserver) {
+      this.revealObserver = new IntersectionObserver(
+        (entries) => {
+          for (const entry of entries) {
+            if (entry.isIntersecting) {
+              (entry.target as HTMLElement).classList.add('reveal-in');
+              this.revealObserver?.unobserve(entry.target);
+            }
+          }
+        },
+        { root: null, threshold: 0.12, rootMargin: '0px 0px -10% 0px' }
+      );
+    }
+
+    const selectors = [
+      '.feature-card',
+      '.project-card',
+      '.service-detail',
+      '.review-card',
+      '.timeline-item',
+      '.masonry-item',
+      '.stat-item',
+      '.highlight-card',
+      '.info-item',
+      '.contact-form',
+      '.service-card-home'
+    ];
+
+    const nodes = Array.from(document.querySelectorAll(selectors.join(',')));
+    for (const node of nodes) {
+      const el = node as HTMLElement;
+      if (el.classList.contains('reveal-in')) continue;
+      if (!el.classList.contains('reveal')) el.classList.add('reveal');
+      this.revealObserver.observe(el);
+    }
   }
 
   prepareRoute(outlet: RouterOutlet | null | undefined): string {

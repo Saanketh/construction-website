@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { AdminAuthService } from '../services/admin-auth.service';
 
 @Component({
   selector: 'app-header',
@@ -7,6 +8,8 @@ import { Component } from '@angular/core';
 })
 export class HeaderComponent {
   isMenuOpen = false;
+
+  constructor(public adminAuth: AdminAuthService) {}
 
   toggleMenu() {
     this.isMenuOpen = !this.isMenuOpen;

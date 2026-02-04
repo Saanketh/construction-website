@@ -17,6 +17,7 @@ import { NewsletterComponent } from './newsletter/newsletter.component';
 import { GalleryComponent } from './gallery/gallery.component';
 import { ChatbotComponent } from './chatbot/chatbot.component';
 import { TestimonialsComponent } from './testimonials/testimonials.component';
+import { AdminComponent } from './admin/admin.component';
 
 const routes = [
   { path: '', component: HomeComponent },
@@ -28,6 +29,7 @@ const routes = [
   { path: 'reviews', component: TestimonialsComponent },
   { path: 'newsletter', component: NewsletterComponent },
   { path: 'gallery', component: GalleryComponent },
+  { path: 'admin', component: AdminComponent },
   { path: 'contact', component: ContactComponent },
   { path: '**', redirectTo: '' }
 ];
@@ -46,7 +48,8 @@ const routes = [
     NewsletterComponent,
     GalleryComponent,
     ContactComponent,
-    ChatbotComponent
+    ChatbotComponent,
+    AdminComponent
   ],
   imports: [
     BrowserModule,

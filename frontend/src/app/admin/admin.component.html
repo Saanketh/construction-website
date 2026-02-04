@@ -1,0 +1,318 @@
+<section class="page-header">
+  <div class="container">
+    <h1>Admin Panel</h1>
+    <p>Local-only editor (changes save in this browser only)</p>
+  </div>
+</section>
+
+<section class="admin-content">
+  <div class="container">
+    <div *ngIf="!auth.isAdmin" class="login-card">
+      <h2>Admin Login</h2>
+      <p class="hint">Use username <b>admin</b> and password <b>admin</b>.</p>
+      <div *ngIf="loginError" class="error">{{ loginError }}</div>
+
+      <form (ngSubmit)="login()" class="login-form">
+        <label>
+          Username
+          <input [(ngModel)]="username" name="username" type="text" autocomplete="username" required>
+        </label>
+        <label>
+          Password
+          <input [(ngModel)]="password" name="password" type="password" autocomplete="current-password" required>
+        </label>
+        <button class="btn btn-primary" type="submit">Login</button>
+      </form>
+    </div>
+
+    <div *ngIf="auth.isAdmin" class="admin-shell">
+      <div class="toolbar">
+        <div class="tabs">
+          <button *ngFor="let s of sections" type="button" class="tab"
+                  [class.active]="active === s.id" (click)="loadSection(s.id)">
+            <i class="fas {{ s.icon }}"></i>
+            <span>{{ s.label }}</span>
+          </button>
+        </div>
+
+        <div class="actions">
+          <button type="button" class="btn btn-secondary" (click)="toggleRecycle()">
+            <i class="fas fa-recycle"></i> Recycle Bin
+          </button>
+          <button type="button" class="btn btn-secondary" (click)="duplicateSelected()" [disabled]="!selected">
+            <i class="fas fa-clone"></i> Duplicate
+          </button>
+          <button type="button" class="btn btn-danger" (click)="deleteSelected()" [disabled]="!selected">
+            <i class="fas fa-trash"></i> Delete
+          </button>
+          <button type="button" class="btn btn-primary" (click)="createNew()">
+            <i class="fas fa-plus"></i> Add
+          </button>
+          <button type="button" class="btn btn-dark" (click)="logout()">
+            <i class="fas fa-sign-out-alt"></i> Logout
+          </button>
+        </div>
+      </div>
+
+      <div class="grid">
+        <div class="list">
+          <div class="list-header">
+            <h3>{{ active | titlecase }}</h3>
+            <p>{{ list.length }} item(s)</p>
+          </div>
+
+          <div class="list-items">
+            <div *ngFor="let item of list; let i = index"
+                 class="list-item"
+                 [class.active]="i === selectedIndex"
+                 draggable="true"
+                 (dragstart)="onDragStart(i)"
+                 (dragover)="$event.preventDefault()"
+                 (drop)="onDrop(i)"
+                 (dragend)="onDragEnd()"
+                 (click)="selectItem(i)">
+              <div class="drag-handle"><i class="fas fa-grip-vertical"></i></div>
+              <div class="thumb" *ngIf="item.imageUrl || item.url">
+                <img [src]="item.imageUrl || item.url" alt="" />
+              </div>
+              <div class="text">
+                <div class="title">{{ item.title || item.name || 'Untitled' }}</div>
+                <div class="subtitle">
+                  <span *ngIf="item.category">{{ item.category }}</span>
+                  <span *ngIf="item.status">{{ item.status }}</span>
+                  <span *ngIf="item.date">{{ item.date }}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div *ngIf="showRecycle" class="recycle">
+            <h4>Recycle Bin ({{ recycle.length }})</h4>
+            <div *ngIf="recycle.length === 0" class="muted">Nothing here yet.</div>
+
+            <div class="recycle-item" *ngFor="let r of recycle">
+              <div class="recycle-meta">
+                <div class="recycle-title">{{ r.item?.title || r.item?.name || 'Untitled' }}</div>
+                <div class="recycle-sub">Deleted: {{ r.deletedAt | date:'short' }}</div>
+              </div>
+              <button type="button" class="btn btn-secondary" (click)="restoreItem(r.id)">Restore</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="editor" *ngIf="selected">
+          <div class="editor-header">
+            <h3>Edit</h3>
+            <button type="button" class="btn btn-primary" (click)="saveSelected()">
+              <i class="fas fa-save"></i> Save
+            </button>
+          </div>
+
+          <!-- Projects -->
+          <div *ngIf="active === 'projects'" class="form">
+            <label>Title<input [(ngModel)]="selected.title" name="ptitle"></label>
+            <label>Description<textarea [(ngModel)]="selected.description" name="pdesc" rows="4"></textarea></label>
+            <div class="row">
+              <label>Category
+                <select [(ngModel)]="selected.category" name="pcat">
+                  <option>Residential</option>
+                  <option>Commercial</option>
+                </select>
+              </label>
+              <label>Location
+                <select [(ngModel)]="selected.location" name="ploc">
+                  <option>Shankar Nagar</option>
+                  <option>Kamal Vihar</option>
+                  <option>Amlidih</option>
+                  <option>Devendra Nagar</option>
+                </select>
+              </label>
+              <label>Status
+                <select [(ngModel)]="selected.status" name="pstatus">
+                  <option>Completed</option>
+                  <option>In Progress</option>
+                  <option>Yet to plan</option>
+                </select>
+              </label>
+            </div>
+            <div class="row">
+              <label>Sq Ft<input [(ngModel)]="selected.sqft" name="psqft"></label>
+              <label>Completion Date<input [(ngModel)]="selected.completionDate" name="pdate" placeholder="YYYY-MM"></label>
+            </div>
+
+            <div class="media">
+              <div class="preview" *ngIf="selected.imageUrl"><img [src]="selected.imageUrl" alt=""></div>
+              <div class="media-actions">
+                <label class="file">
+                  <input type="file" accept="image/*" (change)="uploadImage($event, 'imageUrl')">
+                  <span><i class="fas fa-upload"></i> Browse from device</span>
+                </label>
+
+                <label *ngIf="recycleImages.length" class="restore">
+                  <span><i class="fas fa-history"></i> Restore from backup</span>
+                  <select (change)="onRestoreSelect($event, 'imageUrl')">
+                    <option value="">Select from recycle bin</option>
+                    <option *ngFor="let r of recycleImages" [value]="r.id">{{ r.label }}</option>
+                  </select>
+                </label>
+
+                <label>Image URL<input [(ngModel)]="selected.imageUrl" name="pimg"></label>
+              </div>
+            </div>
+          </div>
+
+          <!-- Services -->
+          <div *ngIf="active === 'services'" class="form">
+            <label>Title<input [(ngModel)]="selected.title" name="stitle"></label>
+            <label>Description<textarea [(ngModel)]="selected.description" name="sdesc" rows="4"></textarea></label>
+            <div class="row">
+              <label>Icon (FontAwesome class)
+                <input [(ngModel)]="selected.icon" name="sicon" placeholder="fa-home">
+              </label>
+            </div>
+            <div class="media">
+              <div class="preview" *ngIf="selected.imageUrl"><img [src]="selected.imageUrl" alt=""></div>
+              <div class="media-actions">
+                <label class="file">
+                  <input type="file" accept="image/*" (change)="uploadImage($event, 'imageUrl')">
+                  <span><i class="fas fa-upload"></i> Browse from device</span>
+                </label>
+                <label *ngIf="recycleImages.length" class="restore">
+                  <span><i class="fas fa-history"></i> Restore from backup</span>
+                  <select (change)="onRestoreSelect($event, 'imageUrl')">
+                    <option value="">Select from recycle bin</option>
+                    <option *ngFor="let r of recycleImages" [value]="r.id">{{ r.label }}</option>
+                  </select>
+                </label>
+                <label>Image URL<input [(ngModel)]="selected.imageUrl" name="simg"></label>
+              </div>
+            </div>
+
+            <label>Steps (JSON)
+              <textarea [(ngModel)]="selected.stepsJson" name="ssteps" rows="10" placeholder="Paste JSON array of steps"></textarea>
+            </label>
+            <p class="hint">Tip: steps should be an array with step number, title, and description.</p>
+          </div>
+
+          <!-- Blogs -->
+          <div *ngIf="active === 'blogs'" class="form">
+            <label>Title<input [(ngModel)]="selected.title" name="btitle"></label>
+            <label>Excerpt<textarea [(ngModel)]="selected.excerpt" name="bex" rows="3"></textarea></label>
+            <label>Content<textarea [(ngModel)]="selected.content" name="bcontent" rows="8"></textarea></label>
+            <div class="row">
+              <label>Author<input [(ngModel)]="selected.author" name="bauthor"></label>
+              <label>Date<input [(ngModel)]="selected.date" name="bdate"></label>
+              <label>Category<input [(ngModel)]="selected.category" name="bcat"></label>
+            </div>
+            <div class="media">
+              <div class="preview" *ngIf="selected.imageUrl"><img [src]="selected.imageUrl" alt=""></div>
+              <div class="media-actions">
+                <label class="file">
+                  <input type="file" accept="image/*" (change)="uploadImage($event, 'imageUrl')">
+                  <span><i class="fas fa-upload"></i> Browse from device</span>
+                </label>
+                <label *ngIf="recycleImages.length" class="restore">
+                  <span><i class="fas fa-history"></i> Restore from backup</span>
+                  <select (change)="onRestoreSelect($event, 'imageUrl')">
+                    <option value="">Select from recycle bin</option>
+                    <option *ngFor="let r of recycleImages" [value]="r.id">{{ r.label }}</option>
+                  </select>
+                </label>
+                <label>Image URL<input [(ngModel)]="selected.imageUrl" name="bimg"></label>
+              </div>
+            </div>
+          </div>
+
+          <!-- Newsletter -->
+          <div *ngIf="active === 'newsletters'" class="form">
+            <label>Title<input [(ngModel)]="selected.title" name="ntitle"></label>
+            <label>Subtitle<input [(ngModel)]="selected.subtitle" name="nsub"></label>
+            <label>Content<textarea [(ngModel)]="selected.content" name="ncontent" rows="7"></textarea></label>
+            <label>Date<input [(ngModel)]="selected.date" name="ndate"></label>
+            <div class="media">
+              <div class="preview" *ngIf="selected.imageUrl"><img [src]="selected.imageUrl" alt=""></div>
+              <div class="media-actions">
+                <label class="file">
+                  <input type="file" accept="image/*" (change)="uploadImage($event, 'imageUrl')">
+                  <span><i class="fas fa-upload"></i> Browse from device</span>
+                </label>
+                <label *ngIf="recycleImages.length" class="restore">
+                  <span><i class="fas fa-history"></i> Restore from backup</span>
+                  <select (change)="onRestoreSelect($event, 'imageUrl')">
+                    <option value="">Select from recycle bin</option>
+                    <option *ngFor="let r of recycleImages" [value]="r.id">{{ r.label }}</option>
+                  </select>
+                </label>
+                <label>Image URL<input [(ngModel)]="selected.imageUrl" name="nimg"></label>
+              </div>
+            </div>
+          </div>
+
+          <!-- Gallery -->
+          <div *ngIf="active === 'gallery'" class="form">
+            <label>Title<input [(ngModel)]="selected.title" name="gtitle"></label>
+            <label>Category
+              <select [(ngModel)]="selected.category" name="gcat">
+                <option value="living-room">Living Room</option>
+                <option value="bedroom">Bedroom</option>
+                <option value="kitchen">Kitchen</option>
+                <option value="bathroom">Bathroom</option>
+                <option value="commercial">Commercial</option>
+              </select>
+            </label>
+            <div class="media">
+              <div class="preview" *ngIf="selected.url"><img [src]="selected.url" alt=""></div>
+              <div class="media-actions">
+                <label class="file">
+                  <input type="file" accept="image/*" (change)="uploadImage($event, 'url')">
+                  <span><i class="fas fa-upload"></i> Browse from device</span>
+                </label>
+                <label *ngIf="recycleImages.length" class="restore">
+                  <span><i class="fas fa-history"></i> Restore from backup</span>
+                  <select (change)="onRestoreSelect($event, 'url')">
+                    <option value="">Select from recycle bin</option>
+                    <option *ngFor="let r of recycleImages" [value]="r.id">{{ r.label }}</option>
+                  </select>
+                </label>
+                <label>Image URL<input [(ngModel)]="selected.url" name="gurl"></label>
+              </div>
+            </div>
+          </div>
+
+          <!-- Reviews -->
+          <div *ngIf="active === 'reviews'" class="form">
+            <label>Client Name<input [(ngModel)]="selected.name" name="rname"></label>
+            <label>Title<input [(ngModel)]="selected.title" name="rtitle"></label>
+            <label>Message<textarea [(ngModel)]="selected.message" name="rmsg" rows="5"></textarea></label>
+            <div class="row">
+              <label>Location<input [(ngModel)]="selected.location" name="rloc"></label>
+              <label>Type
+                <select [(ngModel)]="selected.projectType" name="rtype">
+                  <option>Residential</option>
+                  <option>Commercial</option>
+                </select>
+              </label>
+              <label>Rating
+                <select [(ngModel)]="selected.rating" name="rrating">
+                  <option [ngValue]="5">5</option>
+                  <option [ngValue]="4">4</option>
+                  <option [ngValue]="3">3</option>
+                  <option [ngValue]="2">2</option>
+                  <option [ngValue]="1">1</option>
+                </select>
+              </label>
+              <label>Date<input [(ngModel)]="selected.date" name="rdate" placeholder="YYYY-MM"></label>
+            </div>
+          </div>
+        </div>
+
+        <div class="editor" *ngIf="!selected">
+          <div class="empty-editor">
+            <i class="fas fa-hand-pointer"></i>
+            <p>Select an item to edit, or click <b>Add</b>.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
